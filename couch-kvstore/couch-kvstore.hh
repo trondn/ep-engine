@@ -80,12 +80,12 @@ const size_t COUCHSTORE_METADATA_SIZE(2 * sizeof(uint32_t) + sizeof(uint64_t));
 class CouchRequest
 {
 public:
-    CouchRequest(const Item &it, int rev, CouchRequestCallback &cb, bool del);
+    CouchRequest(const Item &it, uint64_t rev, CouchRequestCallback &cb, bool del);
 
     uint16_t getVBucketId(void) {
         return vbucketId;
     }
-    int getRevNum(void) {
+    uint64_t getRevNum(void) {
         return fileRevNum;
     }
     Doc *getDbDoc(void) {
@@ -126,7 +126,7 @@ private :
     size_t valuelen;
     uint8_t meta[COUCHSTORE_METADATA_SIZE];
     uint16_t vbucketId;
-    int fileRevNum;
+    uint64_t fileRevNum;
     std::string key;
     Doc dbDoc;
     DocInfo dbDocInfo;
@@ -302,17 +302,17 @@ private:
 
     bool getDbFile(uint16_t vbucketId, std::string &dbFileName);
 
-    int checkNewRevNum(std::string &dbname, bool newFile = false);
+    uint64_t checkNewRevNum(std::string &dbname, bool newFile = false);
 
     void populateFileNameMap(std::vector<std::string> &filenames);
     void getFileNameMap(std::vector<uint16_t> *vbids, std::string &dirname,
-                        std::map<uint16_t, int> &filemap);
-    void updateDbFileMap(uint16_t vbucketId, int newFileRev,
+                        std::map<uint16_t, uint64_t> &filemap);
+    void updateDbFileMap(uint16_t vbucketId, uint64_t newFileRev,
                          bool insertImmediately = false);
     void remVBucketFromDbFileMap(uint16_t vbucketId);
-    couchstore_error_t  openDB(uint16_t vbucketId, uint16_t fileRev, Db **db,
-                               uint64_t options, uint16_t *newFileRev = NULL);
-    couchstore_error_t saveDocs(uint16_t vbid, int rev, Doc **docs,
+    couchstore_error_t  openDB(uint16_t vbucketId, uint64_t fileRev, Db **db,
+                               uint64_t options, uint64_t *newFileRev = NULL);
+    couchstore_error_t saveDocs(uint16_t vbid, uint64_t rev, Doc **docs,
                                 DocInfo **docinfos, int docCount);
     void commitCallback(CouchRequest **committedReqs, int numReqs,
                         couchstore_error_t errCode);
@@ -325,7 +325,7 @@ private:
     Configuration &configuration;
     const std::string dbname;
     CouchNotifier *couchNotifier;
-    std::map<uint16_t, int>dbFileMap;
+    std::map<uint16_t, uint64_t>dbFileMap;
     std::vector<CouchRequest *> pendingReqsQ;
     size_t pendingCommitCnt;
     bool intransaction;
