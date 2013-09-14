@@ -1073,6 +1073,182 @@ extern "C" {
         return iterator;
     }
 
+    static ENGINE_ERROR_CODE EvpUprStep(ENGINE_HANDLE* handle,
+                                        const void* cookie,
+                                        struct upr_message_producers *producers)
+    {
+        ENGINE_ERROR_CODE errCode;
+        errCode = getHandle(handle)->uprStep(cookie, producers);
+        releaseHandle(handle);
+        return errCode;
+    }
+
+    static ENGINE_ERROR_CODE EvpUprStreamReq(ENGINE_HANDLE* handle,
+                                             const void* cookie,
+                                             const void *gid, size_t ngid,
+                                             uint32_t flags,
+                                             uint32_t opaque,
+                                             uint16_t vbucket,
+                                             uint64_t startSeqno,
+                                             uint64_t endSeqno,
+                                             uint64_t vbucketUuid,
+                                             uint64_t highSeqno,
+                                             uint64_t *rollbackSeqno)
+    {
+        ENGINE_ERROR_CODE errCode;
+        errCode = getHandle(handle)->uprStreamReq(cookie,
+                                                  gid, ngid, flags, opaque,
+                                                  vbucket, startSeqno,
+                                                  endSeqno, vbucketUuid,
+                                                  highSeqno, rollbackSeqno);
+        releaseHandle(handle);
+        return errCode;
+    }
+
+    static ENGINE_ERROR_CODE EvpUprGetFailoverLog(ENGINE_HANDLE* handle,
+                                                  const void* cookie,
+                                                  uint32_t opaque,
+                                                  uint16_t vbucket,
+                                                  upr_add_failover_log callback)
+    {
+        ENGINE_ERROR_CODE errCode;
+        errCode = getHandle(handle)->uprGetFailoverLog(cookie, opaque, vbucket,
+                                                       callback);
+        releaseHandle(handle);
+        return errCode;
+    }
+
+    static ENGINE_ERROR_CODE EvpUprStreamStart(ENGINE_HANDLE* handle,
+                                               const void* cookie,
+                                               uint32_t opaque,
+                                               uint16_t vbucket)
+    {
+        ENGINE_ERROR_CODE errCode;
+        errCode = getHandle(handle)->uprStreamStart(cookie, opaque, vbucket);
+        releaseHandle(handle);
+        return errCode;
+    }
+
+    static ENGINE_ERROR_CODE EvpUprStreamEnd(ENGINE_HANDLE* handle,
+                                             const void* cookie,
+                                             uint32_t opaque,
+                                             uint16_t vbucket,
+                                             uint32_t flags)
+    {
+        ENGINE_ERROR_CODE errCode;
+        errCode = getHandle(handle)->uprStreamEnd(cookie, opaque,
+                                                  vbucket, flags);
+        releaseHandle(handle);
+        return errCode;
+    }
+
+    static ENGINE_ERROR_CODE EvpUprSnapshotStart(ENGINE_HANDLE* handle,
+                                                 const void* cookie,
+                                                 uint32_t opaque,
+                                                 uint16_t vbucket)
+    {
+        ENGINE_ERROR_CODE errCode;
+        errCode = getHandle(handle)->uprSnapshotStart(cookie, opaque, vbucket);
+        releaseHandle(handle);
+        return errCode;
+    }
+
+    static ENGINE_ERROR_CODE EvpUprSnapshotEnd(ENGINE_HANDLE* handle,
+                                               const void* cookie,
+                                               uint32_t opaque,
+                                               uint16_t vbucket)
+    {
+        ENGINE_ERROR_CODE errCode;
+        errCode = getHandle(handle)->uprSnapshotEnd(cookie, opaque, vbucket);
+        releaseHandle(handle);
+        return errCode;
+    }
+
+    static ENGINE_ERROR_CODE EvpUprMutation(ENGINE_HANDLE* handle,
+                                            const void* cookie,
+                                            uint32_t opaque,
+                                            const void *key,
+                                            uint16_t nkey,
+                                            const void *value,
+                                            uint32_t nvalue,
+                                            uint64_t cas,
+                                            uint16_t vbucket,
+                                            uint32_t flags,
+                                            uint8_t datatype,
+                                            uint64_t bySeqno,
+                                            uint64_t revSeqno,
+                                            uint32_t expiration,
+                                            uint32_t lockTime)
+    {
+        ENGINE_ERROR_CODE errCode;
+        errCode = getHandle(handle)->uprMutation(cookie, opaque, key, nkey,
+                                                 value, nvalue, cas, vbucket,
+                                                 flags, datatype,
+                                                 bySeqno, revSeqno, expiration,
+                                                 lockTime);
+        releaseHandle(handle);
+        return errCode;
+    }
+
+    static ENGINE_ERROR_CODE EvpUprDeletion(ENGINE_HANDLE* handle,
+                                            const void* cookie,
+                                            uint32_t opaque,
+                                            const void *key,
+                                            uint16_t nkey,
+                                            uint64_t cas,
+                                            uint16_t vbucket,
+                                            uint64_t bySeqno,
+                                            uint64_t revSeqno)
+    {
+        ENGINE_ERROR_CODE errCode;
+        errCode = getHandle(handle)->uprDeletion(cookie, opaque, key, nkey, cas,
+                                                 vbucket, bySeqno, revSeqno);
+        releaseHandle(handle);
+        return errCode;
+    }
+
+    static ENGINE_ERROR_CODE EvpUprExpiration(ENGINE_HANDLE* handle,
+                                              const void* cookie,
+                                              uint32_t opaque,
+                                              const void *key,
+                                              uint16_t nkey,
+                                              uint64_t cas,
+                                              uint16_t vbucket,
+                                              uint64_t bySeqno,
+                                              uint64_t revSeqno)
+    {
+        ENGINE_ERROR_CODE errCode;
+        errCode = getHandle(handle)->uprExpiration(cookie, opaque, key, nkey,
+                                                   cas, vbucket, bySeqno,
+                                                   revSeqno);
+        releaseHandle(handle);
+        return errCode;
+    }
+
+    static ENGINE_ERROR_CODE EvpUprFlush(ENGINE_HANDLE* handle,
+                                         const void* cookie,
+                                         uint32_t opaque,
+                                         uint16_t vbucket)
+    {
+        ENGINE_ERROR_CODE errCode;
+        errCode = getHandle(handle)->uprFlush(cookie, opaque, vbucket);
+        releaseHandle(handle);
+        return errCode;
+    }
+
+    static ENGINE_ERROR_CODE EvpUprSetVbucketState(ENGINE_HANDLE* handle,
+                                                   const void* cookie,
+                                                   uint32_t opaque,
+                                                   uint16_t vbucket,
+                                                   vbucket_state_t state)
+    {
+        ENGINE_ERROR_CODE errCode;
+        errCode = getHandle(handle)->uprSetVbucketState(cookie, opaque,
+                                                        vbucket, state);
+        releaseHandle(handle);
+        return errCode;
+    }
+
     static void EvpHandleDisconnect(const void *cookie,
                                     ENGINE_EVENT_TYPE type,
                                     const void *event_data,
@@ -1215,6 +1391,21 @@ EventuallyPersistentEngine::EventuallyPersistentEngine(GET_SERVER_API get_server
     ENGINE_HANDLE_V1::get_stats_struct = NULL;
     ENGINE_HANDLE_V1::errinfo = NULL;
     ENGINE_HANDLE_V1::aggregate_stats = NULL;
+
+
+    ENGINE_HANDLE_V1::upr.step = EvpUprStep;
+    ENGINE_HANDLE_V1::upr.get_failover_log = EvpUprGetFailoverLog;
+    ENGINE_HANDLE_V1::upr.stream_req = EvpUprStreamReq;
+    ENGINE_HANDLE_V1::upr.stream_start = EvpUprStreamStart;
+    ENGINE_HANDLE_V1::upr.stream_end = EvpUprStreamEnd;
+    ENGINE_HANDLE_V1::upr.snapshot_start = EvpUprSnapshotStart;
+    ENGINE_HANDLE_V1::upr.snapshot_end = EvpUprSnapshotEnd;
+    ENGINE_HANDLE_V1::upr.mutation = EvpUprMutation;
+    ENGINE_HANDLE_V1::upr.deletion = EvpUprDeletion;
+    ENGINE_HANDLE_V1::upr.expiration = EvpUprExpiration;
+    ENGINE_HANDLE_V1::upr.flush = EvpUprFlush;
+    ENGINE_HANDLE_V1::upr.set_vbucket_state = EvpUprSetVbucketState;
+
 
     serverApi = getServerApiFunc();
     memset(&info, 0, sizeof(info));
