@@ -112,9 +112,9 @@ EP_ENGINE_C_SRC = \
 EP_ENGINE_OBJS = ${EP_ENGINE_C_SRC:%.c=.libs/%.o} ${EP_ENGINE_CC_SRC:%.cc=.libs/%.o}
 
 .libs/ep.so: ${OBJDIR} ${GENFILES} $(EP_ENGINE_OBJS)
-	${LINK.cc} -o $@ -shared ${EP_ENGINE_OBJS} -L${MEMCACHED}/lib -lmcd_util \
+	${LINK.cc} -o $@ -shared ${EP_ENGINE_OBJS} -L${MEMCACHED}/lib -L${MEMCACHED}/bin -lmcd_util \
                   ${LIB} -lcouchstore -lpthread  -lsnappy -levent\
-                  -lws2_32
+                  -lws2_32 -lcJSON -lplatform
 ${GEN_CONFIG}: configuration.json
 	${LOCAL}/bin/genconfig.exe
 
