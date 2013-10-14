@@ -22,14 +22,30 @@
 
 #define mkdir(a, b) mkdir(a)
 
+#ifndef EWOULDBLOCK
 #define EWOULDBLOCK        EAGAIN
+#endif
+#ifndef EAFNOSUPPORT
 #define EAFNOSUPPORT       47
+#endif
+#ifndef EADDRINUSE
 #define EADDRINUSE         WSAEADDRINUSE
+#endif
+#ifndef ENOTCONN
 #define ENOTCONN           WSAENOTCONN
+#endif
+#ifndef ECONNRESET
 #define ECONNRESET         WSAECONNRESET
+#endif
+#ifndef EAI_SYSTEM
 #define EAI_SYSTEM         -11
+#endif
+#ifndef EMSGSIZE
 #define EMSGSIZE WSAEMSGSIZE
+#endif
+#ifndef EINTR
 #define EINTR WSAEINTR
+#endif
 
 #define setsockopt(_socket, _level, _option_name, _option_value, _option_len) \
         setsockopt((_socket), (_level), (_option_name), (char*)(_option_value), (_option_len))
