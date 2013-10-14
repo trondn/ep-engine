@@ -451,7 +451,7 @@ public:
     /**
      * Logically delete this object.
      */
-    void del(EPStats &stats, HashTable &ht, bool isMetaDelete=false) {
+    void del(EPStats &, HashTable &ht, bool isMetaDelete=false) {
         if (isDeleted()) {
             return;
         }
